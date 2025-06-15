@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from functools import wraps
 from django.contrib import messages
-from Home.models import Events
+from Home.models import Events, student_data
 
 # Create your views here.
 def login_required(view_func):
@@ -26,7 +26,30 @@ def login(request):
 
     return render(request, "login.html")
 
+def student(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        password = request.POST.get("password")
+        image = request.FILES.get("image")
+
+        students = student_data(
+            name = name,
+            password = password,
+            image = image
+        )
+        students.save()
+
+        if name == "shariph" and password == "thapa7":
+            request.session['logged_in'] = True
+            return redirect("index")
+        else:
+            messages.error(request, "Invalid!")
+            return render(request,"login_student.html")
+        
+    return render(request,"login_student.html")    
+
 # Index
+@login_required
 def index(request):
     query_name = request.GET.get("event_name")
     query_date = request.GET.get("event_date")
@@ -73,9 +96,6 @@ def createEvent(request):
         return redirect("adminpage")
 
     return render(request, "createEvent.html")
-
-def student(request):
-    return render(request, "login_student.html")
 
 def logout(request):
     request.session.flush()

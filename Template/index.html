@@ -75,9 +75,9 @@
 {% endblock event_details %}
 
 {% block log %}
-<button class="login-btn">
-  <a href="/student">Log In</a> <i>&#8594;</i>
-</button>
+{% for sutdent in  sutdents%}
+{{ sutdent.image }}
+{% endfor %}
 {% endblock log %}
 
 {% block button %}<a href="#">Contact</a>{% endblock button %}
