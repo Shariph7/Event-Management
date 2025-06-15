@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      color: #1a202c;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.3rem 4rem;
+      background: linear-gradient(to right, #7765F6, #2D7DD2);
+      color: white;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .login-btn {
+      border: 1px solid white;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+    }
+
+    .login-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .login-btn i {
+      font-style: normal;
+    }
+
+    .container {
+      padding: 40px 60px;
+    }
+
+    .search-section {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 35px;
+      flex-wrap: wrap;
+    }
+
+    .search-section input,
+    .search-section button {
+      padding: 12px 16px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid #cbd5e0;
+      outline: none;
+    }
+
+    .search-section input {
+      background-color: white;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-section button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search-section button:hover {
+      background-color: #4338ca;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #d1d5db;
+    }
+
+    thead {
+      background-color: #e5e7eb;
+    }
+
+    a.edit-link {
+      margin-right: 10px;
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a.delete-link {
+      color: #dc2626;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card .title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1f2937;
+    }
+
+    .card .date {
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    .card .description {
+      font-size: 0.95rem;
+      color: #4b5563;
+      flex-grow: 1;
+      margin-bottom: 16px;
+    }
+
+    .card button {
+      background: #41ab5d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 200;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background-color 0.3s;
+    }
+
+    .card button:hover {
+      background-color: #059669;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo-section">
+      <span class="logo-text">MERO VIDYA</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">About Us</a>
+      {% block Database %}<a href="#">Database</a>{% endblock Database %}
+      {% block button %}<a href="/createEvent">Create Event</a>{% endblock button %}
+      {% block log %}
+      <button class="login-btn">
+        <a href="/logout">Logout</a> <i>&#8594;</i>
+      </button>
+      {% endblock log %}
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 style="font-weight: 400;">Events throughout the year!</h1>
+    <br>
+    <div class="search-section">
+      {% block search %}
+      <form method="get" action="{% url 'index' %}" style="display: flex; gap: 15px; align-items: center;">
+        <input type="text" name="event_name" placeholder="Search events" value="{{ request.GET.event_name }}">
+        <input type="date" name="event_date" value="{{ request.GET.event_date }}">
+        <button type="submit">Search</button>
+      </form>
+      {% endblock search %}
+    </div>
+
+    {% block event_details %}
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.event }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.date }}</td>
+            <td>
+              <a href="" class="edit-link">Edit</a>
+              <a href="#" class="delete-link">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+    {% endblock event_details %}
+
+</body>
+
+</html>
