@@ -60,14 +60,14 @@ def createEvent(request):
         date = request.POST.get("date")
         number = request.POST.get("number")
         description = request.POST.get("description")
-        # image = request.FILES.get("image")
+        image = request.FILES.get("image")
 
         events = Events(
             event=event,
             date=date,
             number=number,
-            description=description
-            # image=image
+            description=description,
+            image=image
         )
         events.save()
         return redirect("adminpage")

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book an Event</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -16,65 +15,95 @@
 
     html, body {
       height: 100%;
-      background-color: #f5f5f5;
+      width: 100%;
+      overflow: hidden;
     }
 
     body {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px; /* Adds spacing for small screens */
+      height: 100vh;
+      width: 100vw;
     }
 
-    .booking-form {
-      background-color: #fff;
+    .image-section {
+      width: 65%;
+      height: 100%;
+      background-image: url('static/events.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .form-section {
+      width: 35%;
+      height: 100%;
       padding: 32px 24px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .booking-form h2 {
-      margin-bottom: 24px;
-      color: #333;
-      font-size: 24px;
-      text-align: center;
+    .form-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .booking-form label {
-      font-weight: 500;
-      margin-bottom: 6px;
-      display: block;
-      color: #444;
-      font-size: 14px;
-    }
-
-    .booking-form input,
-    .booking-form select,
-    .booking-form textarea {
-      width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 18px;
+    fieldset.form-field {
       border: 1px solid #ccc;
       border-radius: 6px;
+      padding: 8px 10px 10px;
+      min-height: 48px;
+    }
+
+    fieldset.form-field legend {
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      padding: 0 6px;
+    }
+
+    fieldset.form-field input,
+    fieldset.form-field textarea,
+    fieldset.form-field select {
+      width: 100%;
+      border: none;
       font-size: 15px;
+      padding: 4px 0;
       outline: none;
-      transition: border-color 0.2s ease;
+      background-color: transparent;
     }
 
-    .booking-form input:focus,
-    .booking-form textarea:focus,
-    .booking-form select:focus {
-      border-color: #5a67d8;
-    }
-
-    .booking-form textarea {
+    textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 60px;
+      max-height: 100px;
     }
 
-    .booking-form button {
+    .class-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .class-tag {
+      background-color: #5a67d8;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .class-tag .remove-tag {
+      margin-left: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .form-section button {
       width: 100%;
       padding: 12px;
       background-color: #5a67d8;
@@ -87,82 +116,114 @@
       transition: background-color 0.3s ease;
     }
 
-    .booking-form button:hover {
+    .form-section button:hover {
       background-color: #434190;
     }
 
-    @media (max-height: 600px) {
+    @media (max-width: 768px) {
       body {
-        align-items: flex-start;
-        padding-top: 40px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .booking-form {
-        padding: 24px 16px;
+        flex-direction: column;
       }
 
-      .booking-form h2 {
-        font-size: 20px;
+      .image-section {
+        width: 100%;
+        height: 40vh;
       }
 
-      .booking-form input,
-      .booking-form select,
-      .booking-form textarea {
+      .form-section {
+        width: 100%;
+        height: 60vh;
+        padding: 16px;
+      }
+
+      fieldset.form-field input,
+      fieldset.form-field textarea {
         font-size: 14px;
+      }
+
+      .form-section form {
+        gap: 12px;
       }
     }
   </style>
 </head>
-
 <body>
+  <div class="image-section"></div>
 
-  <form class="booking-form" action="{% url 'createEvent' %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <h2>Create Event</h2>
+  <div class="form-section">
+    <form action="{% url 'createEvent' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
 
-    <label for="username">Event Name</label>
-    <input type="text" id="username" name="event" placeholder="Event Name" required>
+      <fieldset class="form-field">
+        <legend>Event Name</legend>
+        <input type="text" name="event" placeholder="Event Name" required />
+      </fieldset>
 
-    <label for="date">Date</label>
-    <input type="date" id="date" name="date" required>
+      <fieldset class="form-field">
+        <legend>Date</legend>
+        <input type="date" name="date" required />
+      </fieldset>
 
-    <label for="for-class">For</label>
-    <select id="for-class" name="for_class" required>
-      <option value="" disabled selected>Select Class</option>
-      <option value="Nursery">Nursery</option>
-      <option value="KG">L.K.G</option>
-      <option value="KG">U.K.G</option>
-      <option value="1">Class 1</option>
-      <option value="2">Class 2</option>
-      <option value="3">Class 3</option>
-      <option value="4">Class 4</option>
-      <option value="5">Class 5</option>
-      <option value="6">Class 6</option>
-      <option value="7">Class 7</option>
-      <option value="8">Class 8</option>
-      <option value="9">Class 9</option>
-      <option value="10">Class 10</option>
-      <option value="11">Class 11</option>
-      <option value="12">Class 12</option>
-    </select>
+      <fieldset class="form-field">
+        <legend>For Classes</legend>
+        <div class="class-tags" id="classTagsContainer"></div>
+        <input type="hidden" name="for_class" id="selectedClassesInput" />
+      </fieldset>
 
-    <label for="number">No. of Student</label>
-    <input type="number" id="number" name="number" placeholder="No. of Students for..." min="1" required>
+      <fieldset class="form-field">
+        <legend>No. of Students</legend>
+        <input type="number" name="number" placeholder="Enter number" min="1" required />
+      </fieldset>
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description" placeholder="Short description..." required></textarea>
+      <fieldset class="form-field">
+        <legend>Description</legend>
+        <textarea name="description" placeholder="Short description..." required></textarea>
+      </fieldset>
 
-    <!-- Optional: Uncomment below to allow image uploads -->
-    <!--
-    <label for="image">Event Image</label>
-    <input type="file" name="image" accept="image/*">
-    -->
+      <fieldset class="form-field">
+        <legend>Event Image</legend>
+        <input type="file" name="image" accept="image/*" />
+      </fieldset>
 
-    <button type="submit">Create Event</button>
-  </form>
+      <button type="submit">Create Event</button>
+    </form>
+  </div>
 
+  <script>
+    const classList = [
+      "Nursery", "L.K.G", "U.K.G", "Class 1", "Class 2", "Class 3", "Class 4",
+      "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12"
+    ];
+
+    const container = document.getElementById("classTagsContainer");
+    const hiddenInput = document.getElementById("selectedClassesInput");
+
+    let selectedClasses = [...classList];
+
+    function updateHiddenInput() {
+      hiddenInput.value = selectedClasses.join(",");
+    }
+
+    function renderTags() {
+      container.innerHTML = "";
+      selectedClasses.forEach(className => {
+        const tag = document.createElement("div");
+        tag.className = "class-tag";
+        tag.innerHTML = `${className}<span class="remove-tag" data-class="${className}">&times;</span>`;
+        container.appendChild(tag);
+      });
+      updateHiddenInput();
+    }
+
+    container.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-tag")) {
+        const className = e.target.getAttribute("data-class");
+        selectedClasses = selectedClasses.filter(c => c !== className);
+        renderTags();
+      }
+    });
+
+    renderTags();
+  </script>
 </body>
-
 </html>

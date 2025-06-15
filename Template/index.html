@@ -1,35 +1,82 @@
 {% extends "loggedin.html" %}
 
 {% block search %}
-      <form method="get" action="{% url 'index' %}" style="display: flex; gap: 15px; align-items: center;">
-        <input type="text" name="event_name" placeholder="Search events" value="{{ request.GET.event_name }}">
-        <input type="date" name="event_date" value="{{ request.GET.event_date }}">
-        <button type="submit">Search</button>
-      </form>
+  <form method="get" action="{% url 'index' %}" style="display: flex; gap: 15px; align-items: center;">
+    <input type="text" name="event_name" placeholder="Search events" value="{{ request.GET.event_name }}">
+    <input type="date" name="event_date" value="{{ request.GET.event_date }}">
+    <button type="submit">Search</button>
+  </form>
 {% endblock search %}
-
+      {% block admin %}<span class="logo-text"><a href="/" style="text-decoration: none; color: white;">MERO VIDYA</a></span>{% endblock admin %}
 {% block event_details %}
 <div class="card-container">
-      {% for item in items %}
-      <div class="card">
-        <!-- {% if item.image %}
-        <img src="{{ item.image.url }}" alt="Event Image" />
-        {% endif %} -->
+  {% for item in items %}
+  <div class="card">
+    <div class="card-content">
+      <div class="title">{{ item.event }}</div>
+      <div class="date">{{ item.date }}</div>
+      <div class="description">{{ item.description }}</div>
 
-        <div class="card-content">
-          <div class="title">{{ item.event }}</div>
-          <div class="date">{{ item.date }}</div>
-          <div class="description">{{ item.description }}</div>
-          <button>View Event</button>
-        </div>
-      </div>
-      {% endfor %}
+      {% if item.image %}
+        <button onclick="openModal('{{ item.id }}', '{{ item.image.url }}')">View Event</button>
+      {% else %}
+        <button onclick="openModal('{{ item.id }}', '')">View Event</button>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
 </div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Event Image" style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 20px; display: none;" />
+
+    <h2 style="margin-bottom: 20px;">Select Payment Method</h2>
+    <div class="payment-icons">
+      <img src="https://play-lh.googleusercontent.com/TThdLCHh8OY234CSCzjoTIgKdRYpH1SsYvO4kxJPwi_Npyo9QWvmUjIJ1SUnAlgPfA" alt="E-sewa">
+      <i class="fa fa-cc-mastercard" style="font-size:48px;color:red"></i>
+      <i class="fa fa-cc-paypal" style="font-size:48px;color:#267bf1"></i>
+      <i class="fa fa-credit-card" style="font-size:48px;color:#000080"></i>
+    </div>
+    <div class="btn-group" style="margin-top: 20px;">
+      <button class="btn-pay">Pay Now</button>
+      <button class="btn-cash">Cash</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(eventId, imageUrl) {
+    const modal = document.getElementById("paymentModal");
+    const modalImage = document.getElementById("modalImage");
+
+    modal.style.display = "block";
+    if (imageUrl) {
+      modalImage.src = imageUrl;
+      modalImage.style.display = "block";
+    } else {
+      modalImage.style.display = "none";
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("paymentModal").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById("paymentModal");
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+</script>
 {% endblock event_details %}
 
 {% block log %}
 <button class="login-btn">
-        <a href="/student">Log In</a> <i>&#8594;</i>
+  <a href="/student">Log In</a> <i>&#8594;</i>
 </button>
 {% endblock log %}
 
