@@ -7,11 +7,9 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.student, name = "student"),
-    path('index', views.index, name = "index"),
+    path('', views.index, name = "index"),
     path('login', views.login, name="login"),
     path('adminpage', views.adminpage, name="adminpage"),
     path('createEvent', views.createEvent, name='createEvent'),
-    path("logout", views.logout, name="logout"),
-    path('student', views.student, name='student')
+    path("logout", views.logout, name="logout")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -28,28 +28,25 @@ def login(request):
 
 def student(request):
     if request.method == "POST":
-        name = request.POST.get("name")
-        password = request.POST.get("password")
+        student_name = request.POST.get("student_name")
+        date = request.POST.get("date")
+        classs = request.POST.get("class")
         image = request.FILES.get("image")
 
         students = student_data(
-            name = name,
-            password = password,
+            student_name = student_name,
+            date = date,
+            classs = classs,
             image = image
         )
         students.save()
+        return redirect("adminpage")
+    
+    return render(request, "student.html")
 
-        if name == "shariph" and password == "thapa7":
-            request.session['logged_in'] = True
-            return redirect("index")
-        else:
-            messages.error(request, "Invalid!")
-            return render(request,"login_student.html")
-        
-    return render(request,"login_student.html")    
+
 
 # Index
-@login_required
 def index(request):
     query_name = request.GET.get("event_name")
     query_date = request.GET.get("event_date")
@@ -81,6 +78,9 @@ def createEvent(request):
     if request.method == "POST":
         event = request.POST.get("event")
         date = request.POST.get("date")
+        time = request.POST.get("time")
+        venue = request.POST.get("venue")
+        for_class = request.POST.get("for_class")
         number = request.POST.get("number")
         description = request.POST.get("description")
         image = request.FILES.get("image")
