@@ -29,6 +29,11 @@
       width: 80%;
       padding: 40px 60px;
       overflow-y: auto;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .form-section::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
     }
 
     h2 {
@@ -179,15 +184,12 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <!-- Your sidebar will go here later -->
-  </div>
+  <div class="sidebar"></div>
 
   <div class="form-section">
     <h2>Create a New Event</h2>
     <form action="{% url 'createEvent' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-
       <div class="row">
         <div class="field">
           <label for="event">Event Name</label>

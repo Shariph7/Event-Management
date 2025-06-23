@@ -100,3 +100,6 @@ def createEvent(request):
 def logout(request):
     request.session.flush()
     return redirect('/')
+
+def views(request):
+    return render(request, "views.html")

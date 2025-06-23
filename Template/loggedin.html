@@ -2,10 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Booking</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
@@ -13,11 +15,12 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
     }
 
     body {
-      color: #1a202c;
+      background-color: #f9fafb;
+      color: #1f2937;
+      font-family: 'Poppins', sans-serif;
     }
 
     .navbar {
@@ -27,17 +30,13 @@
       padding: 1.3rem 4rem;
       background: linear-gradient(to right, #7765F6, #2D7DD2);
       color: white;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .logo-section {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-    }
-
-    .logo-icon {
-      width: 30px;
-      height: 30px;
     }
 
     .logo-text {
@@ -50,6 +49,7 @@
       display: flex;
       align-items: center;
       gap: 2rem;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .nav-links a {
@@ -68,13 +68,11 @@
       padding: 0.4rem 1rem;
       border-radius: 6px;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       background: transparent;
       color: white;
       cursor: pointer;
       transition: background 0.2s ease-in-out;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .login-btn:hover {
@@ -85,227 +83,245 @@
       font-style: normal;
     }
 
-    .container {
-      padding: 40px 60px;
+    .image {
+      height: 35px;
+      width: 35px;
     }
 
-    .search-section {
+    .main-container {
       display: flex;
-      gap: 15px;
-      margin-bottom: 35px;
-      flex-wrap: wrap;
+      min-height: calc(100vh - 80px);
     }
 
-    .search-section input,
-    .search-section button {
-      padding: 12px 16px;
-      font-size: 1rem;
-      border-radius: 10px;
-      border: 1px solid #cbd5e0;
-      outline: none;
+    .sidebar-space {
+      width: 16%;
     }
 
-    .search-section input {
-      background-color: white;
-      flex: 1;
-      min-width: 200px;
+    .content {
+      width: 83%;
+      padding: 40px 50px;
     }
 
-    .search-section button {
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .top-left h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
       background-color: #4f46e5;
       color: white;
       border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .search-section button:hover {
+    .btn:hover {
       background-color: #4338ca;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+    .filter-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     }
 
-    th,
-    td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #d1d5db;
+    .filters {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+      font-family: 'Poppins', sans-serif;
     }
 
-    thead {
-      background-color: #e5e7eb;
-    }
-
-    a.edit-link {
-      margin-right: 10px;
-      color: #4f46e5;
-      text-decoration: none;
+    .filters label {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 6px;
+      display: inline-block;
       font-weight: 500;
     }
 
-    a.delete-link {
-      color: #dc2626;
-      text-decoration: none;
-      font-weight: 500;
+    .filters select {
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #1f2937;
+      background-color: #f1f5f9;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      width: 280px;
+      font-family: 'Poppins', sans-serif;
     }
 
+    .filters select:focus {
+      outline: 2px solid #7c65f2;
+    }
+
+    .search-btn {
+      padding: 8px 40px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 300;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .search-btn:hover {
+      background-color: #4338ca;
+    }
+
+    .info-text {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 400;
+      color: #64748b;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .arrow {
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 2px;
+    }
+
+    .down {
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+
+    .image {
+      height: 28px;
+      width: 28px;
+    }
+
+    /* Search Bar Styles */
+    .search-form {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin: 40px 50px 20px 50px;
+      flex-wrap: wrap;
+    }
+
+    .search-form input[type="text"],
+    .search-form input[type="date"] {
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      width: 240px;
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+    }
+
+    .search-form input:focus {
+      outline: 2px solid #7c65f2;
+    }
+
+    .search-form button {
+      padding: 10px 20px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-form button:hover {
+      background-color: #4338ca;
+    }
+
+    /* Card Container */
     .card-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 50px 60px 50px;
     }
 
+    /* Individual Card */
     .card {
       background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
     .card-content {
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
     }
 
     .card .title {
-      font-size: 1.25rem;
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       color: #1f2937;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .card .date {
-      font-size: 0.95rem;
+      font-size: 14px;
       color: #6b7280;
       margin-bottom: 12px;
+      font-family: 'Poppins', sans-serif;
     }
 
     .card .description {
-      font-size: 0.95rem;
-      color: #4b5563;
-      flex-grow: 1;
-      margin-bottom: 16px;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 18px;
+      font-family: 'Poppins', sans-serif;
     }
 
     .card button {
-      background: #41ab5d;
+      padding: 8px 16px;
+      background-color: #2d7dd2;
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 200;
+      border-radius: 6px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
       cursor: pointer;
-      align-self: flex-start;
-      transition: background-color 0.3s;
+      transition: background 0.3s ease;
     }
 
     .card button:hover {
-      background-color: #059669;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content {
-      background-color: white;
-      margin: 10% auto;
-      padding: 30px;
-      border-radius: 12px;
-      width: 400px;
-      max-width: 90%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      position: relative;
-    }
-
-    .payment-icons {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .payment-icons img {
-      width: 50px;
-      height: 50px;
-      transition: transform 0.2s;
-      cursor: pointer;
-    }
-
-    .payment-icons img:hover {
-      transform: scale(1.1);
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .btn-pay,
-    .btn-cash {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-pay {
-      background-color: #41ab5d;
-      color: white;
-    }
-
-    .btn-pay:hover {
-      background-color: #2f855a;
-    }
-
-    .btn-cash {
-      background-color: #facc15;
-      color: white;
-    }
-
-    .btn-cash:hover {
-      background-color: #eab308;
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 18px;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #4b5563;
-    }
-
-    .close:hover {
-      color: red;
+      background-color: #2563eb;
     }
   </style>
 </head>
@@ -314,62 +330,63 @@
 
   <nav class="navbar">
     <div class="logo-section">
-      {% block admin %}<span class="logo-text"><a href="/adminpage" style="text-decoration: none; color: white;">MERO VIDYA</a></span>{% endblock admin %}
+      <a href="/"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
+      <span class="logo-text"><a href="/" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
     </div>
     <div class="nav-links">
-      <a href="#">About Us</a>
-      {% block Database %}<a href="#">Database</a>{% endblock Database %}
-      {% block button %}<a href="/createEvent">Create Event</a>{% endblock button %}
-      {% block students %}<a href="/student">students</a>{% endblock students %}
-      {% block log %}
+      {% block navbar %}
+      <a href="#">Home</a>
+      <a href="#"><i class="fa fa-bell" style="font-size:20px"></i></a>
+      <a href="#"><i class="fa fa-search" style="font-size: 20px;"></i></a>
+      {% endblock navbar %}
+      {% block login %}
       <button class="login-btn">
-        <a href="/logout">Logout</a> <i>&#8594;</i>
+        <a href="/logout" style="text-decoration: none; color: white;">Logout</a> <i>&#8594;</i>
       </button>
-      {% endblock log %}
+      {% endblock login %}
     </div>
   </nav>
 
-  <div class="container">
-    <h1 style="font-weight: 400;">Events throughout the year!</h1>
-    <br>
-    <div class="search-section">
-      {% block search %}
-      <form method="get" action="{% url 'index' %}" style="display: flex; gap: 15px; align-items: center;">
-        <input type="text" name="event_name" placeholder="Search events" value="{{ request.GET.event_name }}">
-        <input type="date" name="event_date" value="{{ request.GET.event_date }}">
-        <button type="submit">Search</button>
-      </form>
-      {% endblock search %}
-    </div>
+  {% block main_container %}
+  <div class="main-container">
+    <div class="sidebar-space"></div>
+    <div class="content">
+      <div class="top-bar">
+        <div class="top-left">
+          <h2>Event Details</h2>
+        </div>
+        <div class="actions">
+          <button class="btn"><a href="/createEvent" style="text-decoration: none; color: white;">+ Create
+              Event</a></button>
+          <button class="btn">More <i class="arrow down"></i></button>
+        </div>
+      </div>
 
-    {% block event_details %}
-    <div style="overflow-x: auto;">
-      <table>
-        <thead>
-          <tr>
-            <th>Event Name</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-          <tr>
-            <td>{{ item.event }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.date }}</td>
-            <td>
-              <a href="" class="edit-link">Edit</a>
-              <a href="#" class="delete-link">Delete</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="filter-box">
+        <div class="filters">
+          <div>
+            <label for="academic">Academic Year</label><br />
+            <select id="academic">
+              <option>Current Session</option>
+            </select>
+          </div>
+          <div>
+            <label for="class">Class Section</label><br />
+            <select id="class">
+              <option>Select Class</option>
+            </select>
+          </div>
+          <div>
+            <button class="search-btn">SEARCH</button>
+          </div>
+        </div>
+        <div class="info-text">
+          Select class-section to view Students
+        </div>
+      </div>
     </div>
   </div>
-  {% endblock event_details %}
+  {% endblock main_container %}
 
 </body>
 
