@@ -29,11 +29,11 @@
       width: 80%;
       padding: 40px 60px;
       overflow-y: auto;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
 
     .form-section::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     h2 {
@@ -138,7 +138,7 @@
     }
 
     button[type="submit"] {
-      padding: 14px;
+      padding: 5px;
       background: #5a67d8;
       color: white;
       font-size: 16px;
@@ -147,7 +147,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      width: 200px;
+      width: 220px;
     }
 
     button[type="submit"]:hover {
@@ -192,56 +192,73 @@
       {% csrf_token %}
       <div class="row">
         <div class="field">
-          <label for="event">Event Name</label>
+          <label for="event">Event Title*</label>
           <input type="text" name="event" id="event" placeholder="e.g. Science Fair" required />
         </div>
         <div class="field">
-          <label for="category">Event Category</label>
-          <select name="category" id="category" required>
-            <option value="">Select</option>
+          <label for="date">Start Date*</label>
+          <input type="date" name="start_date" id="start_date" required />
+        </div>
+        <div class="field">
+          <label for="date">End Date*</label>
+          <input type="date" name="end_date" id="end_date" required />
+        </div>
+        <div class="field">
+          <label for="type">Event Type*</label>
+          <select name="type" id="type" required>
+            <option value="">------</option>
+            <option value="Sports">Exam</option>
             <option value="Sports">Sports</option>
-            <option value="Cultural">Cultural</option>
-            <option value="Academic">Academic</option>
-            <option value="Workshop">Workshop</option>
-            <option value="Other">Other</option>
+            <option value="Holiday">Holiday</option>
+            <option value="Program">Program</option>
+            <option value="Meeting">Meeting</option>
+            <option value="Celebration">Celebration</option>
           </select>
+        </div>
+      </div>
+
+      <div class="row">              
+        <div class="field">
+          <label for="time">Start Time*</label>
+          <input type="time" name="start_time" id="start_time" required />
+        </div>
+        <div class="field">
+          <label for="time">End Time*</label>
+          <input type="time" name="end_time" id="end_time" required />
         </div>
       </div>
 
       <div class="row">
         <div class="field">
-          <label for="date">Event Date</label>
-          <input type="date" name="date" id="date" required />
+          <label for="venue">Venue*</label>
+          <input type="text" name="venue" id="venue" placeholder="e.g. Main Auditorium" required />
         </div>
         <div class="field">
-          <label for="time">Event Time</label>
-          <input type="time" name="time" id="time" required />
+          <label for="pay">Pay*</label>
+          <select name="Pay" id="pay" required>
+            <option value="">------</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="money">Money*</label>
+          <input type="number" name="Money" id="money" placeholder="₹ ---" required />
         </div>
       </div>
 
       <div class="field">
-        <label for="venue">Venue</label>
-        <input type="text" name="venue" id="venue" placeholder="e.g. Main Auditorium" required />
-      </div>
-
-      <div class="field">
-        <label>For Classes</label>
+        <label>Select Class*</label>
         <div class="class-tags" id="classTagsContainer"></div>
         <input type="hidden" name="for_class" id="selectedClassesInput" />
       </div>
 
       <div class="field">
         <label for="description">Description</label>
-        <textarea name="description" id="description" placeholder="Provide detailed information about the event..." required></textarea>
+        <textarea name="description" id="description" required></textarea>
       </div>
-
-      <div class="row actions">
-        <input type="file" name="image" accept="image/*" />
-        <button type="button" class="edit">Edit</button>
-        <button type="button">Delete</button>
-      </div>
-
-      <button type="submit">Create Event</button>
+      
+      <button type="submit">Publish Event</button>
     </form>
   </div>
 
@@ -280,6 +297,23 @@
     });
 
     renderTags();
+
+    const paySelect = document.getElementById("pay");
+    const moneyInput = document.getElementById("money");
+
+    function toggleMoneyField() {
+      if (paySelect.value === "Yes") {
+        moneyInput.disabled = false;
+        moneyInput.required = true;
+      } else {
+        moneyInput.disabled = true;
+        moneyInput.required = false;
+        moneyInput.value = "";
+      }
+    }
+
+    toggleMoneyField();
+    paySelect.addEventListener("change", toggleMoneyField);
   </script>
 </body>
 </html>

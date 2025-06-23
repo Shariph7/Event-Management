@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from functools import wraps
 from django.contrib import messages
-from Home.models import Events, student_data
+from Home.models import Events
 
 # Create your views here.
 def login_required(view_func):
@@ -25,26 +25,6 @@ def login(request):
             return render(request, "login.html")
 
     return render(request, "login.html")
-
-def student(request):
-    if request.method == "POST":
-        student_name = request.POST.get("student_name")
-        date = request.POST.get("date")
-        classs = request.POST.get("class")
-        image = request.FILES.get("image")
-
-        students = student_data(
-            student_name = student_name,
-            date = date,
-            classs = classs,
-            image = image
-        )
-        students.save()
-        return redirect("adminpage")
-    
-    return render(request, "student.html")
-
-
 
 # Index
 def index(request):
@@ -77,20 +57,27 @@ def adminpage(request):
 def createEvent(request):
     if request.method == "POST":
         event = request.POST.get("event")
-        date = request.POST.get("date")
-        time = request.POST.get("time")
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        type = request.POST.get("type")
+        start_time = request.POST.get("start_time")
+        end_time = request.POST.get("end_time")  
         venue = request.POST.get("venue")
+        Money = request.POST.get("Money")
         for_class = request.POST.get("for_class")
-        number = request.POST.get("number")
         description = request.POST.get("description")
-        image = request.FILES.get("image")
 
         events = Events(
-            event=event,
-            date=date,
-            number=number,
-            description=description,
-            image=image
+            event = event,
+            start_date = start_date,
+            end_date = end_date,
+            type = type,
+            start_time = start_time,
+            end_time = end_time,
+            Money = Money,
+            venue = venue,
+            for_class = for_class,
+            description = description
         )
         events.save()
         return redirect("adminpage")
@@ -100,6 +87,3 @@ def createEvent(request):
 def logout(request):
     request.session.flush()
     return redirect('/')
-
-def views(request):
-    return render(request, "views.html")

@@ -12,5 +12,4 @@ urlpatterns = [
     path('adminpage', views.adminpage, name="adminpage"),
     path('createEvent', views.createEvent, name='createEvent'),
     path("logout", views.logout, name="logout"),
-    path("views", views.views, name="views")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

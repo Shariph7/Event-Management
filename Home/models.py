@@ -2,23 +2,17 @@ from django.db import models
 from datetime import date
 
 class Events(models.Model):
-    event = models.CharField(max_length=30)
-    date = models.DateField(default=date.today)
-    time = models.TimeField(null=True)
-    venue = models.CharField(max_length=30, default='TBD')
-    for_class = models.IntegerField(null=True)
-    number = models.IntegerField(null=True)
+    event = models.CharField(max_length=100, verbose_name="Event Title")
+    start_date = models.DateField(default=date.today)
+    end_date = models.DateField(default=date.today)
+    type = models.CharField(max_length=30,default="Program", verbose_name="Event Type")
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+    venue = models.CharField(max_length=100, default='TBD')
+    Money = models.IntegerField(null=True, blank=True)
+    for_class = models.CharField(max_length=30, null=True)
+    number = models.IntegerField(null=True, blank=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='event_images/', null=True, blank=True)
 
     def __str__(self):
-        return self.event
-
-class student_data(models.Model):
-    student_name = models.CharField(max_length=30)
-    date = models.DateField(default=date.today)
-    classs = models.IntegerField(null=True)
-    image = models.ImageField(upload_to='Student_Data/', null=True, blank=True)
-
-    def __str__(self):
-        return self.student_name
+        return f"{self.event} ({self.start_date})"

@@ -1,5 +1,4 @@
 from django.contrib import admin
-from Home.models import Events, student_data
+from Home.models import Events
 
 admin.site.register(Events)
-admin.site.register(student_data)
