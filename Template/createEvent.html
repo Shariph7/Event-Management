@@ -86,29 +86,6 @@
       resize: vertical;
     }
 
-    .class-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .class-tag {
-      background: #5a67d8;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-    }
-
-    .remove-tag {
-      margin-left: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
     .actions {
       display: flex;
       align-items: center;
@@ -196,18 +173,18 @@
           <input type="text" name="event" id="event" placeholder="e.g. Science Fair" required />
         </div>
         <div class="field">
-          <label for="date">Start Date*</label>
+          <label for="start_date">Start Date*</label>
           <input type="date" name="start_date" id="start_date" required />
         </div>
         <div class="field">
-          <label for="date">End Date*</label>
+          <label for="end_date">End Date*</label>
           <input type="date" name="end_date" id="end_date" required />
         </div>
         <div class="field">
           <label for="type">Event Type*</label>
           <select name="type" id="type" required>
             <option value="">------</option>
-            <option value="Sports">Exam</option>
+            <option value="Exam">Exam</option>
             <option value="Sports">Sports</option>
             <option value="Holiday">Holiday</option>
             <option value="Program">Program</option>
@@ -217,13 +194,13 @@
         </div>
       </div>
 
-      <div class="row">              
+      <div class="row">
         <div class="field">
-          <label for="time">Start Time*</label>
+          <label for="start_time">Start Time*</label>
           <input type="time" name="start_time" id="start_time" required />
         </div>
         <div class="field">
-          <label for="time">End Time*</label>
+          <label for="end_time">End Time*</label>
           <input type="time" name="end_time" id="end_time" required />
         </div>
       </div>
@@ -235,7 +212,7 @@
         </div>
         <div class="field">
           <label for="pay">Pay*</label>
-          <select name="Pay" id="pay" required>
+          <select name="pay" id="pay" required>
             <option value="">------</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
@@ -243,61 +220,42 @@
         </div>
         <div class="field">
           <label for="money">Money*</label>
-          <input type="number" name="Money" id="money" placeholder="₹ ---" required />
+          <input type="number" name="money" id="money" placeholder="₹ ---" required />
         </div>
+
+        <div class="field">
+        <label for="for_class">Select Class*</label>
+        <select name="for_class" id="for_class" required>
+          <option value="">------</option>
+          <option value="Nursery">Nursery</option>
+          <option value="L.K.G">L.K.G</option>
+          <option value="U.K.G">U.K.G</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
       </div>
 
-      <div class="field">
-        <label>Select Class*</label>
-        <div class="class-tags" id="classTagsContainer"></div>
-        <input type="hidden" name="for_class" id="selectedClassesInput" />
-      </div>
-
-      <div class="field">
+            <div class="field">
         <label for="description">Description</label>
         <textarea name="description" id="description" required></textarea>
       </div>
-      
+
       <button type="submit">Publish Event</button>
     </form>
   </div>
 
   <script>
-    const classList = [
-      "Nursery", "L.K.G", "U.K.G", "Class 1", "Class 2", "Class 3", "Class 4",
-      "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12"
-    ];
-
-    const container = document.getElementById("classTagsContainer");
-    const hiddenInput = document.getElementById("selectedClassesInput");
-
-    let selectedClasses = [...classList];
-
-    function updateHiddenInput() {
-      hiddenInput.value = selectedClasses.join(",");
-    }
-
-    function renderTags() {
-      container.innerHTML = "";
-      selectedClasses.forEach(className => {
-        const tag = document.createElement("div");
-        tag.className = "class-tag";
-        tag.innerHTML = `${className}<span class="remove-tag" data-class="${className}">&times;</span>`;
-        container.appendChild(tag);
-      });
-      updateHiddenInput();
-    }
-
-    container.addEventListener("click", (e) => {
-      if (e.target.classList.contains("remove-tag")) {
-        const className = e.target.getAttribute("data-class");
-        selectedClasses = selectedClasses.filter(c => c !== className);
-        renderTags();
-      }
-    });
-
-    renderTags();
-
     const paySelect = document.getElementById("pay");
     const moneyInput = document.getElementById("money");
 

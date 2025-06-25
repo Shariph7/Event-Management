@@ -41,16 +41,18 @@ def index(request):
 
 @login_required
 def adminpage(request):
-    query_name = request.GET.get("event_name")
-    query_date = request.GET.get("event_date")
+    query_class = request.GET.get("for_class")
+    class_list = ["Nursery", "LKG", "UKG", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
-    items = Events.objects.all()
+    items = []
+    if query_class:
+        items = Events.objects.filter(for_class__iexact=query_class)
 
-    if query_name:
-        items = items.filter(event__icontains = query_name)
-    if query_date:
-        items = items.filter(date = query_date)
-    return render(request, "loggedin.html", {'items': items})
+    return render(request, "adminpage.html", {
+        'items': items,
+        'class_list': class_list
+    })
+
 
 
 @login_required

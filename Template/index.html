@@ -1,10 +1,17 @@
-{% extends "loggedin.html" %}
+{% extends "adminpage.html" %}
 
 {% block navbar %}
 <a href="https://merovidya.com/about_us/">About Us</a>
 <a href="https://merovidya.com/features/">Features</a>
 <a href="https://merovidya.com/contact_us/">Contact</a>
 {% endblock navbar %}
+
+{% block header %}
+<div class="logo-section">
+      <a href="/"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
+      <span class="logo-text"><a href="/" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
+</div>
+{% endblock header %}
 
 {% block login %}
 <button class="login-btn">
