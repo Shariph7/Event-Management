@@ -15,7 +15,7 @@ def login_required(view_func):
 def login_required_student(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if not request.session.get('logged_in'):
+        if not request.session.get('student_logged_in'):
             return redirect('login_student')
         return view_func(request, *args, **kwargs)
     return wrapper
@@ -24,26 +24,22 @@ def login(request):
     if request.method == "POST":
         name = request.POST.get("name")
         password = request.POST.get("password")
-
         if name == "admin" and password == "admin":
             request.session['logged_in'] = True
             return redirect("adminpage")
         else:
             messages.error(request, "Invalid username or password.")
             return render(request, "login.html")
-
     return render(request, "login.html")
 
 def index(request):
     query_name = request.GET.get("event_name")
     query_date = request.GET.get("event_date")
     items = Events.objects.all()
-
     if query_name:
         items = items.filter(event__icontains=query_name)
     if query_date:
         items = items.filter(date=query_date)
-
     return render(request, "index.html", {'items': items})
 
 @login_required
@@ -51,19 +47,16 @@ def adminpage(request):
     query_class = request.GET.get("for_class")
     query_academic = request.GET.get("academic")
     class_list = ["Nursery", "LKG", "UKG", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-
     if request.method == "POST" and "Delete_Event" in request.POST:
         event_id = request.POST.get("Delete_Event")
         event = get_object_or_404(Events, id=event_id)
         event.delete()
         return redirect("adminpage")
-
     items = Events.objects.all()
     if query_class:
         items = items.filter(for_class__icontains=query_class)
     if query_academic:
         items = items.filter(academic_year=query_academic)
-
     return render(request, "adminpage.html", {
         'items': items,
         'class_list': class_list,
@@ -84,7 +77,6 @@ def createEvent(request):
         Money = request.POST.get("Money")
         for_class = ", ".join(request.POST.getlist("for_class"))
         description = request.POST.get("description")
-
         events = Events(
             event=event,
             start_date=start_date,
@@ -99,7 +91,6 @@ def createEvent(request):
         )
         events.save()
         return redirect("adminpage")
-
     return render(request, "createEvent.html")
 
 def logout(request):
@@ -112,15 +103,12 @@ def data(request):
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
         classess = request.POST.get("classess")
-
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect('data')
-
         if student.objects.filter(fullname=fullname).exists():
             messages.error(request, "Username already exists.")
             return redirect('data')
-
         users = student(
             fullname=fullname,
             password=password,
@@ -128,10 +116,8 @@ def data(request):
             classess=classess
         )
         users.save()
-
         messages.success(request, "Registration successful.")
         return redirect('adminpage')
-
     return render(request, "data.html")
 
 def login_student(request):
@@ -139,23 +125,31 @@ def login_student(request):
     if request.method == 'POST':
         username = request.POST.get('name')
         password = request.POST.get('password')
-
         try:
             students = student.objects.get(fullname=username)
             if students.password == password:
                 request.session['student_id'] = students.id
-
+                request.session['student_logged_in'] = True
                 return redirect('student_profie')
             else:
                 error = "Incorrect password."
-        except:
-            error = "User not found."
-
+        except student.DoesNotExist:
+            error = "Student not found."
     return render(request, 'login_student.html', {'error': error})
 
 @login_required_student
 def student_profie(request):
+    query_name = request.GET.get("event_name")
+    query_date = request.GET.get("event_date")
     student_id = request.session.get('student_id')
-
     student_obj = get_object_or_404(student, id=student_id)
-    return render(request, "student.html", {'fullname': student_obj.fullname})
+    student_class = student_obj.classess.strip()
+    items = Events.objects.filter(for_class__icontains=student_class)
+    if query_name:
+        items = items.filter(event__icontains=query_name)
+    if query_date:
+        items = items.filter(date=query_date)
+    return render(request, "student.html", {
+        'fullname': student_obj.fullname,
+        'items': items
+    })

@@ -1,5 +1,150 @@
 {% extends "index.html" %}
 
+{% block navbar %}
+<a href="https://merovidya.com/about_us/">About Us</a>
+<a href="https://merovidya.com/features/">Features</a>
+<a href="/logout"><button style="font-family: 'Poppins', sans-serif;
+padding: 8px 16px;
+      background-color: #74c476;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s ease;">Logout</button></a>
+{% endblock navbar %}
+
+{% block header %}
+<div class="logo-section">
+      <a href="/student_profie"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
+      <span class="logo-text"><a href="/student_profie" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
+</div>
+{% endblock header %}
+
 {% block login %}
 Hi {{ fullname }} 👋
 {% endblock %}
+
+{% block main_container %}
+<form method="get" action="{% url 'index' %}" class="search-form">
+  <input type="text" name="event_name" placeholder="Search events" value="{{ request.GET.event_name }}">
+  <input type="date" name="event_date" value="{{ request.GET.event_date }}">
+  <button type="submit">Search</button>
+</form>
+
+<div class="card-container">
+  {% for item in items %}
+  <div class="card" style="position: relative;">
+    <div class="card-content">
+      <div class="title">{{ item.event }}</div>
+      <div class="date">{{ item.start_date }} - {{ item.end_date }}</div>
+      <div class="description">{{ item.description }}</div>
+
+       <button class="book-now-btn"
+              onclick="openPopup(event, '{{ item.start_time }}', '{{ item.Money|default_if_none:'' }}', '{{ item.venue }}')">
+        Book Now
+      </button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="floatingPopup" class="floating-popup" style="display: none;">
+  <div id="popupContent">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <p><strong>Time:</strong> <span id="popupTime"></span></p>
+    <p><strong>Venue:</strong> <span id="popupVenue"></span></p>
+    <p id="popupMoneyContainer" style="display: none;"><strong>Money:</strong> <span id="popupMoney"></span></p>
+
+    <button id="actionButton" class="action-btn" style="font-family: 'Poppins', sans-serif;">Pay Now</button>
+  </div>
+</div>
+
+<script>
+  function openPopup(event, time, money, venue) {
+    const popup = document.getElementById("floatingPopup");
+    const popupTime = document.getElementById("popupTime");
+    const popupMoney = document.getElementById("popupMoney");
+    const popupVenue = document.getElementById("popupVenue");
+    const popupMoneyContainer = document.getElementById("popupMoneyContainer");
+    const actionButton = document.getElementById("actionButton");
+
+    popupTime.textContent = time;
+    popupVenue.textContent = venue;
+
+    // Show/hide money and set button label
+    if (money && money.trim() !== "") {
+      popupMoney.textContent = money;
+      popupMoneyContainer.style.display = "block";
+      actionButton.textContent = "Pay Now";
+    } else {
+      popupMoneyContainer.style.display = "none";
+      actionButton.textContent = "Book Now";
+    }
+
+    // Position the popup next to clicked button
+    const rect = event.target.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+    popup.style.top = (rect.top + scrollTop) + "px";
+    popup.style.left = (rect.right + 20 + scrollLeft) + "px";
+    popup.style.display = "block";
+  }
+
+  function closePopup() {
+    document.getElementById("floatingPopup").style.display = "none";
+  }
+
+  window.addEventListener("click", function(e) {
+    const popup = document.getElementById("floatingPopup");
+    if (!popup.contains(e.target) && !e.target.classList.contains("book-now-btn")) {
+      closePopup();
+    }
+  });
+</script>
+
+<style>
+  .floating-popup {
+    position: absolute;
+    z-index: 9999;
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #999;
+  }
+
+  .action-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  .book-now-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+</style>
+{% endblock main_container %}
