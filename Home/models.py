@@ -16,3 +16,12 @@ class Events(models.Model):
 
     def __str__(self):
         return f"{self.event} ({self.start_date})"
+    
+class student(models.Model):
+    fullname = models.CharField(max_length=30, unique=True)
+    password = models.CharField(max_length=30)
+    confirm_password = models.CharField(max_length=30)
+    classess = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.fullname

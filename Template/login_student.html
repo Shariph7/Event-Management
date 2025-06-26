@@ -1,0 +1,25 @@
+{% extends "login.html" %}
+
+{% block Student_login %}
+<form method="post" action="{% url "login_student" %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="name" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password">
+            </div>
+
+            <a class="forgot-password" href="#">Forgot Your Password?</a>
+            <button type="submit" class="login-btn">Log in</button>
+            {% if error %}
+            <p style="color: red;"> {{ error }} </p>
+            {% endif %}
+        </form>
+{% endblock Student_login %}
+
+{% block login %}
+Hello
+{% endblock login %}

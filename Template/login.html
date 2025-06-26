@@ -121,6 +121,7 @@
         <h2>Welcome to Mero Vidya 👋</h2>
         <p>To continue please log into your account</p>
 
+        {% block Student_login %}
         <!-- Django form starts here -->
         <form method="post" action="{% url "login" %}">
             {% csrf_token %}
@@ -136,6 +137,7 @@
             <a class="forgot-password" href="#">Forgot Your Password?</a>
             <button type="submit" class="login-btn">Log in</button>
         </form>
+        {% endblock Student_login %}
     </div>
 </body>
 
