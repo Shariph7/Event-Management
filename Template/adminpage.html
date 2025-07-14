@@ -10,37 +10,37 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
   <nav class="navbar">
-  {% block header %}
-  <div class="logo-section">
-    <a href="/adminpage"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
-    <span class="logo-text"><a href="/adminpage" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
-  </div>
-  {% endblock header %}
+    {% block header %}
+    <div class="logo-section">
+      <a href="/adminpage"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
+      <span class="logo-text"><a href="/adminpage" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
+    </div>
+    {% endblock header %}
 
-  <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-  <div class="nav-links" id="nav-links">
-    {% block navbar %}
-    <a href="#">Home</a>
-    <a href="#"><i class="fa fa-bell" style="font-size:20px"></i></a>
-    <a href="#"><i class="fa fa-search" style="font-size: 20px;"></i></a>
-    {% endblock navbar %}
-    {% block login %}
-    <button class="login-btn">
-      <a href="/logout" style="text-decoration: none; color: white;">Logout</a> <i>&#8594;</i>
-    </button>
-    {% endblock login %}
-  </div>
-</nav>
+    <div class="nav-links" id="nav-links">
+      {% block navbar %}
+      <a href="#">Home</a>
+      <a href="#"><i class="fa fa-bell" style="font-size:20px"></i></a>
+      <a href="#"><i class="fa fa-search" style="font-size: 20px;"></i></a>
+      {% endblock navbar %}
+      {% block login %}
+      <button class="login-btn">
+        <a href="/logout" style="text-decoration: none; color: white;">Logout</a> <i>&#8594;</i>
+      </button>
+      {% endblock login %}
+    </div>
+  </nav>
 
 
   {% block main_container %}
@@ -97,6 +97,7 @@
                   <th style="padding: 8px; text-align: left;">End Date</th>
                   <th style="padding: 8px; text-align: left;">Venue</th>
                   <th style="padding: 8px; text-align: left;">Class</th>
+                  <th style="padding: 8px; text-align: left;">Booking</th>
                   <th style="padding: 8px; text-align: left;">Action</th>
                 </tr>
               </thead>
@@ -108,12 +109,13 @@
                   <td style="padding: 6px 8px;">{{ item.end_date }}</td>
                   <td style="padding: 6px 8px;">{{ item.venue }}</td>
                   <td style="padding: 6px 8px;">{{ item.for_class }}</td>
+                  <td style="padding: 6px 8px;">{{ item.available }}</td>
                   <td style="padding: 6px 8px;">
                     <form method="POST" style="display: inline;">
                       {% csrf_token %}
                       <input type="hidden" name="Delete_Event" value="{{ item.id }}">
                       <button type="submit"
-                        style="padding: 5px 10px; background-color: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        style="padding: 5px 10px; background-color: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Poppins', sans-serif;">
                         Delete
                       </button>
                     </form>
@@ -145,4 +147,5 @@
     hamburger.classList.toggle('open');
   });
 </script>
+
 </html>

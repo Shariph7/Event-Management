@@ -153,3 +153,7 @@ def student_profie(request):
         'fullname': student_obj.fullname,
         'items': items
     })
+
+@login_required
+def payment(request):
+    return render(request, "payment.html")

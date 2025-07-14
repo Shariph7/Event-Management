@@ -75,7 +75,6 @@ body {
     font-style: normal;
 }
 
-/* Hamburger Menu */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -103,20 +102,20 @@ body {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Main Layout */
 .main-container {
     display: flex;
+    flex-direction: column;
+    width: 100%;
     min-height: calc(100vh - 80px);
-}
-
-.sidebar-space {
-    width: 14%;
+    padding: 2rem 4rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 .content {
-    width: 86%;
-    padding: 40px 50px;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
 }
+
 
 .top-bar {
     display: flex;

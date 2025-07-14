@@ -8,10 +8,10 @@ class Events(models.Model):
     type = models.CharField(max_length=30,default="Program", verbose_name="Event Type")
     start_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
+    available = models.IntegerField(null=True, blank=True)
     venue = models.CharField(max_length=100, default='TBD')
     Money = models.IntegerField(null=True, blank=True)
     for_class = models.CharField(max_length=30, null=True)
-    number = models.IntegerField(null=True, blank=True)
     description = models.TextField()
 
     def __str__(self):

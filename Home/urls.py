@@ -14,5 +14,6 @@ urlpatterns = [
     path("logout", views.logout, name="logout"),
     path("data", views.data, name = "data"),
     path("login_student", views.login_student, name="login_student"),
-    path("student_profie", views.student_profie, name="student_profie")
+    path("student_profie", views.student_profie, name="student_profie"),
+    path("payment", views.payment, name="payment")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

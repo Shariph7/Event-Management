@@ -17,8 +17,8 @@ padding: 8px 16px;
 
 {% block header %}
 <div class="logo-section">
-      <a href="/student_profie"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
-      <span class="logo-text"><a href="/student_profie" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
+  <a href="/student_profie"><img src="static/outlined_logo.svg" alt="Mero Vidya" class="image"></a>
+  <span class="logo-text"><a href="/student_profie" style="text-decoration: none; color: white;">MERO VIDYA</a></span>
 </div>
 {% endblock header %}
 
@@ -41,8 +41,8 @@ Hi {{ fullname }} 👋
       <div class="date">{{ item.start_date }} - {{ item.end_date }}</div>
       <div class="description">{{ item.description }}</div>
 
-       <button class="book-now-btn"
-              onclick="openPopup(event, '{{ item.start_time }}', '{{ item.Money|default_if_none:'' }}', '{{ item.venue }}')">
+      <button class="book-now-btn"
+              onclick="openPopup(event, '{{ item.start_time }}', '{{ item.Money|default_if_none:'' }}', '{{ item.venue }}', '{{ item.id }}')">
         Book Now
       </button>
     </div>
@@ -57,12 +57,13 @@ Hi {{ fullname }} 👋
     <p><strong>Venue:</strong> <span id="popupVenue"></span></p>
     <p id="popupMoneyContainer" style="display: none;"><strong>Money:</strong> <span id="popupMoney"></span></p>
 
-    <button id="actionButton" class="action-btn" style="font-family: 'Poppins', sans-serif;">Pay Now</button>
+    <!-- ✅ Proper clickable anchor tag styled as a button -->
+    <a href="#" id="actionButton" class="action-btn" style="font-family: 'Poppins', sans-serif;">Book Now</a>
   </div>
 </div>
 
 <script>
-  function openPopup(event, time, money, venue) {
+  function openPopup(event, time, money, venue, eventId) {
     const popup = document.getElementById("floatingPopup");
     const popupTime = document.getElementById("popupTime");
     const popupMoney = document.getElementById("popupMoney");
@@ -73,17 +74,17 @@ Hi {{ fullname }} 👋
     popupTime.textContent = time;
     popupVenue.textContent = venue;
 
-    // Show/hide money and set button label
     if (money && money.trim() !== "") {
       popupMoney.textContent = money;
       popupMoneyContainer.style.display = "block";
       actionButton.textContent = "Pay Now";
+      actionButton.href = "/payment?event_id=" + encodeURIComponent(eventId);
     } else {
       popupMoneyContainer.style.display = "none";
       actionButton.textContent = "Book Now";
+      actionButton.href = "/book_event?event_id=" + encodeURIComponent(eventId);
     }
 
-    // Position the popup next to clicked button
     const rect = event.target.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -128,8 +129,11 @@ Hi {{ fullname }} 👋
   }
 
   .action-btn {
+    display: inline-block;
+    text-align: center;
     background-color: #28a745;
     color: white;
+    text-decoration: none;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
