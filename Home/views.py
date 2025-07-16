@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from functools import wraps
 from django.contrib import messages
-from Home.models import Events, student
+from Home.models import Events, Student
 from django.contrib.auth.models import User
 
 def login_required(view_func):
@@ -97,43 +97,69 @@ def logout(request):
     request.session.flush()
     return redirect('/')
 
-def data(request):
+def register_Student(request):
     if request.method == "POST":
-        fullname = request.POST.get("fullname")
+        first_name = request.POST.get("first_name")
+        middle_name = request.POST.get("middle_name")
+        last_name = request.POST.get("last_name")
+        dob = request.POST.get("dob")
+        student_id = request.POST.get("student_id")             
         password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
-        classess = request.POST.get("classess")
-        if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return redirect('data')
-        if student.objects.filter(fullname=fullname).exists():
+        street = request.POST.get("street")
+        city = request.POST.get("city")
+        province = request.POST.get("province")
+        district = request.POST.get("district")
+        zip = request.POST.get("zip")
+
+        # Contact
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+
+        # Academic
+        class_level = request.POST.get("class_level")
+        faculty = request.POST.get("faculty")
+        comments = request.POST.get("comments")    
+        
+        if Student.objects.filter(first_name=first_name).exists():
             messages.error(request, "Username already exists.")
-            return redirect('data')
-        users = student(
-            fullname=fullname,
+            return redirect('register_Student')
+        users = Student(
+            first_name=first_name,
+            middle_name = middle_name,
+            last_name = last_name,
+            dob = dob,
+            student_id = student_id,
             password=password,
-            confirm_password=confirm_password,
-            classess=classess
+            street = street,
+            city = city,
+            province =province,
+            district = district,
+            zip = zip,
+            email = email,
+            phone = phone,
+            class_level = class_level,
+            faculty = faculty,
+            comments = comments
         )
         users.save()
         messages.success(request, "Registration successful.")
         return redirect('adminpage')
-    return render(request, "data.html")
+    return render(request, "register_Student.html")
 
 def login_student(request):
     error = None
     if request.method == 'POST':
-        username = request.POST.get('name')
+        first_name = request.POST.get('name')
         password = request.POST.get('password')
         try:
-            students = student.objects.get(fullname=username)
+            students = Student.objects.get(first_name=first_name, password = password)
             if students.password == password:
                 request.session['student_id'] = students.id
                 request.session['student_logged_in'] = True
                 return redirect('student_profie')
             else:
                 error = "Incorrect password."
-        except student.DoesNotExist:
+        except Student.DoesNotExist:
             error = "Student not found."
     return render(request, 'login_student.html', {'error': error})
 
@@ -142,15 +168,15 @@ def student_profie(request):
     query_name = request.GET.get("event_name")
     query_date = request.GET.get("event_date")
     student_id = request.session.get('student_id')
-    student_obj = get_object_or_404(student, id=student_id)
-    student_class = student_obj.classess.strip()
+    student_obj = get_object_or_404(Student, id=student_id)
+    student_class = str(student_obj.class_level)
     items = Events.objects.filter(for_class__icontains=student_class)
     if query_name:
         items = items.filter(event__icontains=query_name)
     if query_date:
         items = items.filter(date=query_date)
     return render(request, "student.html", {
-        'fullname': student_obj.fullname,
+        'first_name': student_obj.first_name,
         'items': items
     })
 

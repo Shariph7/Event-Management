@@ -23,7 +23,7 @@ padding: 8px 16px;
 {% endblock header %}
 
 {% block login %}
-Hi {{ fullname }} 👋
+Hi {{ first_name }} 👋
 {% endblock %}
 
 {% block main_container %}
@@ -57,7 +57,6 @@ Hi {{ fullname }} 👋
     <p><strong>Venue:</strong> <span id="popupVenue"></span></p>
     <p id="popupMoneyContainer" style="display: none;"><strong>Money:</strong> <span id="popupMoney"></span></p>
 
-    <!-- ✅ Proper clickable anchor tag styled as a button -->
     <a href="#" id="actionButton" class="action-btn" style="font-family: 'Poppins', sans-serif;">Book Now</a>
   </div>
 </div>

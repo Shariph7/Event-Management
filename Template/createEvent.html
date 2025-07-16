@@ -90,13 +90,8 @@
       overflow: hidden;
     }
 
-    .sidebar {
-      width: 17%;
-      background-color: #ececec;
-    }
-
     .form-section {
-      width: 83%;
+      width: 100%;
       padding: 40px 60px;
       overflow-y: auto;
       scrollbar-width: none;
@@ -260,7 +255,6 @@
 
   <!-- Page content -->
   <div class="main-body">
-    <div class="sidebar"></div>
 
     <div class="form-section">
       <form action="{% url 'createEvent' %}" method="POST" enctype="multipart/form-data">
